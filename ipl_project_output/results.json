@@ -1,0 +1,19 @@
+{
+  "raw_rows": 278205,
+  "raw_columns": 64,
+  "matches": 1169,
+  "processed_rows": 1169,
+  "features": [
+    "powerplay_runs",
+    "powerplay_fours",
+    "powerplay_sixes",
+    "powerplay_dot_balls",
+    "powerplay_wickets",
+    "powerplay_extras"
+  ],
+  "train_samples": 935,
+  "test_samples": 234,
+  "mse": 568.5461475295701,
+  "rmse": 23.844205743315715,
+  "r2": 0.4266723526634184
+}

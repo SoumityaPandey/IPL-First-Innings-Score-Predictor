@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDEs
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local secrets/config
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local raw dataset (large; not required by Streamlit app)
+IPL.csv
