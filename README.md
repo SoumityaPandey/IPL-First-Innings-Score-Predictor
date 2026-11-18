@@ -1,190 +1,244 @@
-# 🏏 IPL First-Innings Score Intelligence
+<div align="center">
 
-> **An interactive machine-learning dashboard for estimating an IPL first-innings score from Powerplay performance.**
+# 🏏 IPL Score Intelligence
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://ipl-score-intelligence.streamlit.app)
-[![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Machine Learning](https://img.shields.io/badge/Model-Linear%20Regression-0A66C2)](https://scikit-learn.org/stable/modules/linear_model.html)
-[![Data](https://img.shields.io/badge/IPL%20Matches-1%2C169-138A72)](https://ipl-score-intelligence.streamlit.app)
+### **Powerplay → Prediction → Insight**
 
-## 🌐 Live Demo
+An interactive machine-learning command center that estimates an IPL team's **first-innings score from its first six overs**.
 
-### [🚀 Open IPL Score Intelligence](https://ipl-score-intelligence.streamlit.app)
+[![🚀 Live Demo](https://img.shields.io/badge/🚀%20LIVE%20DEMO-IPL%20Score%20Intelligence-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://ipl-score-intelligence.streamlit.app)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/SoumityaPandey/IPL-First-Innings-Score-Predictor)
 
-The deployed application provides an interactive analytics cockpit for exploring Powerplay patterns, evaluating the trained model, and generating first-innings score estimates.
+**Built with Python · Pandas · NumPy · Scikit-learn · Plotly · Streamlit**
+
+</div>
 
 ---
 
-## 🎯 Project Overview
+## ⚡ The idea in one line
 
-The goal of this project is to estimate an IPL team's **final first-innings score using information available after the first six overs (Powerplay)**.
+> **Read the Powerplay, understand the momentum, estimate the innings.**
 
-The project follows a complete machine-learning workflow:
+The app takes six match-level Powerplay signals — runs, fours, sixes, dot balls, wickets and extras — and feeds them into a trained **Linear Regression** model to estimate the final first-innings total.
 
-```text
-Raw IPL Ball-by-Ball Data
-          ↓
-Data Cleaning & Transformation
-          ↓
-Match-Level Feature Engineering
-          ↓
-Exploratory Data Analysis
-          ↓
-Feature Scaling
-          ↓
-Linear Regression
-          ↓
-Model Evaluation
-          ↓
-Interactive Streamlit Dashboard
+This is not just a prediction script. It is a complete, interactive ML workflow wrapped inside a futuristic analytics dashboard.
+
+---
+
+## 🌐 Try it live
+
+### 👉 [Open IPL Score Intelligence](https://ipl-score-intelligence.streamlit.app)
+
+No installation required. Open the dashboard, move the Powerplay sliders, and watch the predicted score update instantly.
+
+---
+
+## 🖥️ What you can do inside the app
+
+| Module | What it does |
+|---|---|
+| 🎛️ **Command Dashboard** | KPI overview, Powerplay signal, score distribution and feature cockpit |
+| 🏏 **Score Predictor** | Live prediction using six interactive Powerplay controls |
+| 🔎 **EDA Explorer** | Explore distributions, feature/score relationships and correlations |
+| 🧪 **Model Evaluation** | Inspect MSE, RMSE, R², actual-vs-predicted values and residuals |
+| 🗃️ **Data Explorer** | Filter processed matches by season, batting team and score range; export CSV |
+
+### The prediction screen includes
+
+- 🎚️ Six interactive Powerplay sliders
+- 🎯 Live predicted first-innings score
+- 📏 RMSE-based planning band
+- 🕸️ Powerplay profile radar
+- 📊 Feature contribution view
+- ⚡ Conservative, Balanced and Aggressive scenario presets
+
+> **Note:** The RMSE planning band is an error-based planning range, **not a statistical confidence interval**.
+
+---
+
+## 📊 Project at a glance
+
+| | Value |
+|---|---:|
+| 🏏 IPL matches processed | **1,169** |
+| 📦 Raw rows | **278,205** |
+| 🧾 Raw columns | **64** |
+| 🧠 ML model | **Linear Regression** |
+| 🎯 Input features | **6** |
+| 🏋️ Training samples | **935** |
+| 🧪 Testing samples | **234** |
+| 📉 RMSE | **23.84 runs** |
+| 📐 R² | **0.427** |
+| 📊 MSE | **568.55** |
+
+### What the evaluation means
+
+- **MSE = 568.55** — average squared prediction error on the prepared test split.
+- **RMSE = 23.84 runs** — typical prediction error expressed in runs.
+- **R² = 0.427** — the model explains about 42.7% of the variation in the target on the prepared test split.
+
+The model is therefore best viewed as a **data-driven estimate**, not an exact score oracle.
+
+---
+
+## 🧠 Machine-learning pipeline
+
+```mermaid
+flowchart LR
+    A[Raw IPL Ball-by-Ball Data] --> B[Data Cleaning]
+    B --> C[Match-Level Aggregation]
+    C --> D[Powerplay Feature Engineering]
+    D --> E[EDA & Statistics]
+    E --> F[Train/Test Split]
+    F --> G[StandardScaler]
+    G --> H[Linear Regression]
+    H --> I[Evaluation]
+    I --> J[Joblib Model + Scaler]
+    J --> K[Streamlit Command Center]
 ```
-
-Only **one machine-learning model** is used in the project: **Linear Regression**.
-
----
-
-## 🧠 Machine Learning Approach
 
 ### Target
 
 **Final first-innings score**
 
-### Input Features
+### Six model inputs
 
-The model uses six Powerplay features:
+| Feature | Meaning | Direction in cricket terms |
+|---|---|---|
+| `powerplay_runs` | Runs scored in the first six overs | More scoring momentum |
+| `powerplay_fours` | Fours during the Powerplay | Boundary pressure |
+| `powerplay_sixes` | Sixes during the Powerplay | High-impact scoring |
+| `powerplay_dot_balls` | Dot balls during the Powerplay | Lower scoring pressure |
+| `powerplay_wickets` | Wickets lost during the Powerplay | Early batting damage |
+| `powerplay_extras` | Extras during the Powerplay | Additional runs |
 
-| Feature | Meaning |
-|---|---|
-| `powerplay_runs` | Runs scored during the first six overs |
-| `powerplay_fours` | Number of fours during the Powerplay |
-| `powerplay_sixes` | Number of sixes during the Powerplay |
-| `powerplay_dot_balls` | Dot balls during the Powerplay |
-| `powerplay_wickets` | Wickets lost during the Powerplay |
-| `powerplay_extras` | Extras during the Powerplay |
-
-The features are standardized using **StandardScaler** before model training and prediction.
+The six inputs are standardized using **StandardScaler** before they reach the Linear Regression model.
 
 ---
 
-## 📊 Dataset & Evaluation
+## 🎨 Why the UI is different
 
-The prepared project contains **1,169 IPL matches** after match-level processing.
+Instead of presenting a traditional form like:
 
-| Metric | Result |
-|---|---:|
-| Raw rows | 278,205 |
-| Raw columns | 64 |
-| Processed matches | 1,169 |
-| Training samples | 935 |
-| Testing samples | 234 |
-| MSE | 568.5461 |
-| RMSE | 23.8442 runs |
-| R² | 0.4267 |
+```text
+Input → Predict → Number
+```
 
-### What the metrics mean
+the project turns the model into an **IPL analytics cockpit**.
 
-- **MSE** measures the average squared prediction error.
-- **RMSE** puts the prediction error back into runs; the model's RMSE is about **23.84 runs** on the prepared test split.
-- **R²** indicates the proportion of target variation explained by the model; the prepared test split gives an R² of about **0.43**.
+### Visual language
 
-The model should therefore be treated as an **analytical estimate**, not an exact score predictor.
+- 🌌 Futuristic dark interface
+- 💠 Cyan/violet analytics accents
+- 🧩 KPI cards and information panels
+- 📈 Interactive Plotly charts
+- 🎛️ Real-time controls
+- 🕸️ Radar-based Powerplay profile
+- 📊 Model diagnostics
+- 🗃️ Filterable match-level data
+
+The goal is to make the machine-learning process **explorable**, not hidden behind a single prediction button.
 
 ---
 
-## 🖥️ Interactive Streamlit Dashboard
+## 📸 Analytics preview
 
-The deployed application is designed as an **IPL Command Center** rather than a basic prediction form.
+### Powerplay signal
 
-### 1. Command Dashboard
+![Powerplay signal](ipl_project_output/actual_vs_predicted.png)
 
-- Project and model overview
-- Match-count and model KPI cards
-- Powerplay vs final-score relationship
-- Final-score distribution
-- High-level model insights
+### Score distribution
 
-### 2. Score Predictor
+![Score distribution](ipl_project_output/histogram.png)
 
-Interactive controls allow users to change the six Powerplay inputs and immediately see:
+### Feature relationships
 
-- Predicted first-innings score
-- Prediction planning range based on model RMSE
-- Powerplay profile visualization
-- Feature-level contribution view
-- Preset scenarios for different Powerplay styles
+![Correlation heatmap](ipl_project_output/correlation_heatmap.png)
 
-### 3. EDA Explorer
+> The live dashboard contains additional interactive versions of these analyses.
 
-Interactive visual analysis of the processed dataset, including distributions, relationships, and correlations.
+---
 
-### 4. Model Evaluation
+## 🔬 Model evaluation
 
-Model diagnostics including:
+The evaluation section of the app exposes the model rather than hiding it.
+
+### Included diagnostics
 
 - MSE
 - RMSE
 - R²
-- Actual vs predicted values
-- Prediction residuals
+- Actual vs predicted scatter plot
+- Residual distribution
+- Training/testing sample summary
 
-### 5. Data Explorer
-
-Users can explore the processed match-level dataset with filters and download the filtered data as CSV.
-
----
-
-## 🎨 UI & Experience
-
-The application uses a futuristic dark analytics theme with:
-
-- Command-center navigation
-- Interactive Plotly visualizations
-- KPI cards
-- Live prediction controls
-- Score gauge
-- Powerplay radar profile
-- Responsive dashboard layout
-- Data filtering and CSV export
-
-The objective is to make the ML workflow understandable and interactive rather than presenting only a static model output.
+The trained model and scaler are stored as reusable `.joblib` artifacts so the deployed app can make predictions without retraining every time it starts.
 
 ---
 
-## 📁 Repository Structure
+## 🗂️ Repository structure
 
 ```text
 IPL-First-Innings-Score-Predictor/
 │
-├── app.py
-├── ipl_ml_project.py
-├── requirements.txt
-├── README.md
-├── .gitignore
+├── app.py                              # Streamlit application
+├── ipl_ml_project.py                   # ML/data-processing pipeline
+├── requirements.txt                    # Python dependencies
+├── README.md                           # Project documentation
+├── .gitignore                          # Git exclusions
 │
 ├── ipl_project_output/
-│   ├── IPL_ML_Processed.csv
-│   ├── descriptive_statistics.csv
-│   ├── results.json
-│   ├── linear_regression_model.joblib
-│   ├── standard_scaler.joblib
-│   └── visualization files
+│   ├── IPL_ML_Processed.csv            # Processed match-level dataset
+│   ├── descriptive_statistics.csv      # Descriptive statistics
+│   ├── results.json                    # Saved model metrics/results
+│   ├── linear_regression_model.joblib  # Trained Linear Regression model
+│   ├── standard_scaler.joblib          # Fitted feature scaler
+│   └── *.png                           # Analysis visualizations
 │
 └── docs/
-    └── IPL_ML_Project_Report.pdf
+    └── IPL_ML_Project_Report.pdf       # Project report
 ```
 
 ---
 
-## ⚙️ Run Locally
+## 🛠️ Tech stack
 
-### 1. Clone the repository
+### Data
+
+- **Pandas** — data loading, cleaning and transformation
+- **NumPy** — numerical operations
+
+### Machine Learning
+
+- **Scikit-learn** — train/test split, scaling, Linear Regression and evaluation
+- **Joblib** — model and scaler persistence
+
+### Visualization
+
+- **Plotly** — interactive charts, gauge and radar visualizations
+- **Matplotlib** — supporting analysis plots
+
+### Application
+
+- **Streamlit** — interactive web application
+
+### Deployment
+
+- **GitHub** — source control and repository hosting
+- **Streamlit Community Cloud** — public deployment
+
+---
+
+## 💻 Run it locally
+
+### 1. Clone
 
 ```bash
 git clone https://github.com/SoumityaPandey/IPL-First-Innings-Score-Predictor.git
 cd IPL-First-Innings-Score-Predictor
 ```
 
-### 2. Create and activate a virtual environment
+### 2. Create a Python 3.13 environment
 
 Windows PowerShell:
 
@@ -199,13 +253,13 @@ py -3.13 -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-### 4. Start Streamlit
+### 4. Launch the dashboard
 
 ```bash
 python -m streamlit run app.py
 ```
 
-The application will open at:
+Open:
 
 ```text
 http://localhost:8501
@@ -215,78 +269,104 @@ http://localhost:8501
 
 ## 🚀 Deployment
 
-The application is deployed using **Streamlit Community Cloud** and connected to the GitHub repository.
-
-### Deployment configuration
+This project is deployed from GitHub through **Streamlit Community Cloud**.
 
 ```text
-Repository: SoumityaPandey/IPL-First-Innings-Score-Predictor
-Branch: main
-Main file: app.py
-Live URL: https://ipl-score-intelligence.streamlit.app
+GitHub repository
+      ↓
+main branch
+      ↓
+app.py
+      ↓
+requirements.txt
+      ↓
+Streamlit Community Cloud
+      ↓
+🌐 Public dashboard
 ```
 
-After making changes locally:
+### Current deployment
+
+- **Repository:** [SoumityaPandey/IPL-First-Innings-Score-Predictor](https://github.com/SoumityaPandey/IPL-First-Innings-Score-Predictor)
+- **Branch:** `main`
+- **Entrypoint:** `app.py`
+- **Live app:** [ipl-score-intelligence.streamlit.app](https://ipl-score-intelligence.streamlit.app)
+
+To publish an update:
 
 ```bash
 git add .
-git commit -m "Update Streamlit app"
+git commit -m "Update IPL Score Intelligence"
 git push
 ```
-
-The connected Streamlit deployment can then rebuild from the updated GitHub source.
-
----
-
-## 📦 Data Note
-
-The original raw `IPL.csv` ball-by-ball dataset is **not included in this GitHub-ready deployment package** because the file is larger than GitHub's individual-file limit and is not required to run the deployed application.
-
-The repository includes the processed match-level dataset and the trained model artifacts required by the Streamlit app.
-
-If the original raw dataset is available locally, the preprocessing/training script can be used to reproduce the project outputs.
 
 ---
 
 ## ⚠️ Limitations
 
-- Linear Regression assumes a linear relationship between the selected Powerplay features and the final score.
-- The prepared test split has an R² of approximately 0.43, so a substantial portion of score variation remains unexplained.
-- An RMSE of about 23.84 runs means predictions can deviate considerably from actual scores.
-- Only six Powerplay features are used.
-- The model does not explicitly account for factors such as venue, pitch conditions, batting lineup, bowling quality, match situation, weather, or tactical decisions.
-- The prediction range shown in the dashboard is an error-based planning range, not a formal probability interval.
+This project intentionally keeps the ML approach simple and focused.
+
+- Only **one model** is used: Linear Regression.
+- Predictions use only **six Powerplay features**.
+- No player-level information is included.
+- No venue, pitch, toss, weather or match-condition variables are used by the model.
+- The model does not account for changing team/player strength across seasons.
+- RMSE is useful for understanding typical error, but it does not provide a formal prediction interval.
+- The result should be interpreted as an analytical estimate rather than a guaranteed match score.
+
+These limitations also define the natural next steps for a more advanced version.
 
 ---
 
-## 🔮 Future Enhancements
+## 🔮 Future roadmap
 
-Possible future improvements include:
+### Phase 1 — Stronger modelling
 
-- Compare Linear Regression with additional regression models.
-- Add venue and team-level information.
-- Incorporate historical team performance.
-- Add pitch and weather information where available.
-- Add time-aware validation for season-based evaluation.
-- Track model performance across different IPL seasons.
-- Add model explainability with more detailed feature analysis.
-- Build a richer match-scenario simulator.
+- [ ] Compare Linear Regression with Random Forest / Gradient Boosting
+- [ ] Cross-validation
+- [ ] Hyperparameter tuning
+- [ ] Compare model error across seasons
+
+### Phase 2 — Richer cricket intelligence
+
+- [ ] Venue and pitch information
+- [ ] Toss and innings context
+- [ ] Team-strength features
+- [ ] Player/batter-bowler information
+- [ ] Recent-form features
+
+### Phase 3 — Advanced product experience
+
+- [ ] Live match-data integration
+- [ ] Scenario comparison mode
+- [ ] Historical team dashboards
+- [ ] Explainable-AI layer
+- [ ] Automated model monitoring
 
 ---
 
-## 📄 Project Report
+## 📄 Project report
 
-The detailed university project report is available here:
+The complete project report is available here:
 
-[`docs/IPL_ML_Project_Report.pdf`](docs/IPL_ML_Project_Report.pdf)
+**[`docs/IPL_ML_Project_Report.pdf`](docs/IPL_ML_Project_Report.pdf)**
 
 ---
 
-## ⭐ Project Highlights
+## 🎓 Project takeaway
 
-**Machine Learning:** Linear Regression + StandardScaler  
-**Dataset:** 1,169 processed IPL matches  
-**Interface:** Streamlit + Plotly  
-**Deployment:** Streamlit Community Cloud  
-**Prediction Target:** Final first-innings score  
-**Live Demo:** https://ipl-score-intelligence.streamlit.app
+This project demonstrates the complete path from **raw cricket data to a usable machine-learning product**:
+
+> **Clean → Engineer → Explore → Scale → Train → Evaluate → Visualize → Deploy**
+
+The most important part is not simply predicting a number. It is showing how a trained model can be turned into an **interactive, understandable and deployable data-science application**.
+
+---
+
+<div align="center">
+
+### 🏏 Explore the model. Move the Powerplay. Read the signal.
+
+**[🚀 Launch IPL Score Intelligence](https://ipl-score-intelligence.streamlit.app)**
+
+</div>
